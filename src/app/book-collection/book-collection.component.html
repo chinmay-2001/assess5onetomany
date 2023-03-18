@@ -7,7 +7,7 @@
 </div>
 <br />
 
-<!-- Add delete Container -->
+<!-- Add Container -->
 <div class="container">
   <div class="row">
     <button
@@ -30,21 +30,21 @@
   </div>
 </div>
 
-<!-- AddDelete End -->
+<!-- Add End -->
 
 <br />
 
 <!-- Accordian Start -->
-<div class="container">
+<!-- <div class="container">
   <div class="row">
     <div class="accordion" id="accordionExample">
       <div class="accordion-item" *ngFor="let author of authors; index">
-        <h2 class="accordion-header" id="{{ author.id }}">
+        <h2 class="accordion-header" id="collapseOne">
           <button
             class="accordion-button"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#collapseOne"
+            data-bs-target="#collapse"
             aria-expanded="true"
             aria-controls="collapseOne"
           >
@@ -52,13 +52,13 @@
           </button>
         </h2>
         <div
-          id="{{ author.id }}"
+          id="collapseOne"
           class="accordion-collapse collapse show"
           aria-labelledby="headingOne"
           data-bs-parent="#accordionExample"
         >
           <div class="accordion-body">
-            <!-- Book Card -->
+            Book Card
             <ng-container *ngFor="let book of author.books?.items">
               <div class="card mb-3" style="max-width: 540px">
                 <div class="row g-0">
@@ -81,6 +81,7 @@
                         <i class="fa-solid fa-trash-arrow-up"></i>
                         Delete
                       </button>
+                      
                       <button
                         class="btn btn-dark"
                         id="updateBook"
@@ -117,9 +118,102 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- Accordian End -->
+<div class="container">
+  <div class="row">
+    <ngb-accordion>
+      <ngb-panel title="{{ author.name }}" *ngFor="let author of authors">
+        <ng-template ngbPanelContent>
+          <div
+            class="card mb-3"
+            style="max-width: 540px"
+            *ngFor="let book of author.books?.items"
+            id="accordian"
+          >
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img
+                  src="../../assets/bookimage.jpg"
+                  class="img-fluid rounded-start"
+                  alt="..."
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    {{ book?.title }}
+                    <div>
+                      <!-- delete button -->
+                      <button
+                        class="btn btn-danger"
+                        id="deleteBook"
+                        (click)="deletebook(book!.id, author.id)"
+                        id="deletebook"
+                      >
+                        <i
+                          class="fa-solid fa-trash-arrow-up"
+                          id="delete_icon"
+                        ></i>
+                      </button>
+                      <!-- delete button -->
+
+                      <!-- Update button -->
+                      <button
+                        class="btn btn-dark"
+                        id="updateBook"
+                        data-bs-target="#updateBookModal"
+                        data-bs-toggle="modal"
+                        (click)="setupdateAuthorid(author.id, book!.id)"
+                        id="updatebook"
+                      >
+                        <i class="fa-solid fa-pen"></i>
+                      </button>
+                      <!-- update button end -->
+                    </div>
+                  </h5>
+                  <p class="card-text">{{ book?.genre }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="btn btn-success"
+            data-bs-target="#addBooAccordiaan"
+            data-bs-toggle="modal"
+            (click)="SetAuthorIdAccordian(author.id)"
+          >
+            Add Book
+          </button>
+
+          <button
+            class="btn btn-danger"
+            (click)="Deleteauthor(author.id)"
+            id="deleteAuthor"
+          >
+            Delete Author
+          </button>
+          <button
+            class="btn btn-warning"
+            data-bs-target="#updateAuthorModal"
+            data-bs-toggle="modal"
+            (click)="setAuthorid(author.id)"
+            id="updateAuthor"
+          >
+            Update Author
+          </button>
+        </ng-template>
+
+        <!-- <ng-template ngbPanelContent #elseblock>
+          <div>No Books</div>
+        </ng-template> -->
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+</div>
+
 <!-- Modals -->
 
 <!-- updateBookModel -->
@@ -259,6 +353,60 @@
           Close
         </button>
         <button type="button" class="btn btn-primary" (click)="addbook()">
+          Add Books
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Add Book At Accordian Modal -->
+<div
+  class="modal fade"
+  id="addBooAccordiaan"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="id">id</label>
+          <input type="text" class="form-control" [(ngModel)]="bookid_at_acc" />
+        </div>
+        <div class="mb-3">
+          <label for="name">Book Title</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="booktitle_at_acc"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="Genre">BooK Genre</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="bookgenre_at_acc"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button class="btn btn-primary" (click)="AddBookAtAccordian()">
           Add Books
         </button>
       </div>

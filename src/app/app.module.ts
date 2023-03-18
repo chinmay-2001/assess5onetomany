@@ -5,7 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookCollectionComponent } from './book-collection/book-collection.component';
 import { FormsModule } from '@angular/forms'
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAccordionModule, NgbPanel } from '@ng-bootstrap/ng-bootstrap';
+// import { } from 
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { FormsModule } from '@angular/forms'
     BrowserModule,
     AppRoutingModule,
     AmplifyAuthenticatorModule,
-    FormsModule
+    FormsModule,
+    NgbAccordionModule,
+    NgbPanel
   ],
   providers: [],
   bootstrap: [AppComponent]

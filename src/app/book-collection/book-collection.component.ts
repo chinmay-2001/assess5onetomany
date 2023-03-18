@@ -45,6 +45,34 @@ export class BookCollectionComponent implements OnInit {
       })
   }
 
+  SetAuthorIdAccordian(authorid: string) {
+    this.add_authorid_at_accordian = authorid
+    console.log("add_authorid_at_accordian:", this.add_authorid_at_accordian)
+  }
+  add_authorid_at_accordian: string = ''
+  bookid_at_acc: string = ''
+  booktitle_at_acc: string = ''
+  bookgenre_at_acc: string = ''
+
+  AddBookAtAccordian() {
+    this.api.CreateBook(
+      {
+        id: this.bookid_at_acc,
+        title: this.booktitle_at_acc,
+        genre: this.bookgenre_at_acc,
+        authorBooksId: this.add_authorid_at_accordian
+      })
+      .then(book => {
+        let authorid = book.authorBooksId
+        for (let i = 0; i < this.authors.length; i++) {
+          if (this.authors[i].id === authorid) {
+            this.authors[i].books?.items.push(book as Book)
+          }
+        }
+      })
+  }
+
+
   addauthor() {
     this.api.CreateAuthor(
       {
