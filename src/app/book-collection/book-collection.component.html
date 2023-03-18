@@ -1,0 +1,322 @@
+<div class="continer">
+  <nav class="navbar bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+    </div>
+  </nav>
+</div>
+<br />
+
+<!-- Add delete Container -->
+<div class="container">
+  <div class="row">
+    <button
+      class="btn btn-primary"
+      type="button"
+      id="add_book_button"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Add Book
+    </button>
+    <button
+      class="btn btn-primary"
+      id="add_author_button"
+      data-bs-toggle="modal"
+      data-bs-target="#Author"
+    >
+      Add Author
+    </button>
+  </div>
+</div>
+
+<!-- AddDelete End -->
+
+<br />
+
+<!-- Accordian Start -->
+<div class="container">
+  <div class="row">
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item" *ngFor="let author of authors; index">
+        <h2 class="accordion-header" id="{{ author.id }}">
+          <button
+            class="accordion-button"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#collapseOne"
+            aria-expanded="true"
+            aria-controls="collapseOne"
+          >
+            {{ author.name }}
+          </button>
+        </h2>
+        <div
+          id="{{ author.id }}"
+          class="accordion-collapse collapse show"
+          aria-labelledby="headingOne"
+          data-bs-parent="#accordionExample"
+        >
+          <div class="accordion-body">
+            <!-- Book Card -->
+            <ng-container *ngFor="let book of author.books?.items">
+              <div class="card mb-3" style="max-width: 540px">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img
+                      src="../../assets/bookimage.jpg"
+                      class="img-fluid rounded-start"
+                      alt="..."
+                    />
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ book?.title }}</h5>
+                      <p class="card-text">{{ book?.genre }}</p>
+                      <button
+                        class="btn btn-danger"
+                        id="deleteBook"
+                        (click)="deletebook(book!.id, author.id)"
+                      >
+                        <i class="fa-solid fa-trash-arrow-up"></i>
+                        Delete
+                      </button>
+                      <button
+                        class="btn btn-dark"
+                        id="updateBook"
+                        data-bs-target="#updateBookModal"
+                        data-bs-toggle="modal"
+                        (click)="setupdateAuthorid(author.id, book!.id)"
+                      >
+                        Update Book
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <button
+              class="btn btn-danger"
+              (click)="Deleteauthor(author.id)"
+              id="deleteAuthor"
+            >
+              Delete Author
+            </button>
+            <button
+              class="btn btn-warning"
+              (click)="updateAuthor()"
+              data-bs-target="#updateAuthorModal"
+              data-bs-toggle="modal"
+              id="updateAuthor"
+            >
+              Update Author
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Accordian End -->
+<!-- Modals -->
+
+<!-- updateBookModel -->
+<div
+  class="modal fade"
+  id="updateBookModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="name">Update Book Title</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="updatebooktitle"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="Genre">update BooK Genre</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="updatebookgenre"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="updateBook()">
+          Update changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- updateBookModel End -->
+
+<!-- updateAuthorModel -->
+<div
+  class="modal fade"
+  id="updateAuthorModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="">Author Name</label>
+          <input
+            type="text"
+            name="updateAuthor"
+            class="form-control"
+            [(ngModel)]="update_author_name"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="updateAuthor()">
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- updateAuthorModel End -->
+
+<!-- Add Book Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="id">id</label>
+          <input type="text" class="form-control" [(ngModel)]="bookid" />
+        </div>
+        <div class="mb-3">
+          <label for="name">Book Title</label>
+          <input type="text" class="form-control" [(ngModel)]="booktitle" />
+        </div>
+        <div class="mb-3">
+          <label for="Genre">BooK Genre</label>
+          <input type="text" class="form-control" [(ngModel)]="bookgenre" />
+        </div>
+        <div class="mb-3">
+          <label for="">Author id</label>
+          <input type="text" class="form-control" [(ngModel)]="authorbookid" />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="addbook()">
+          Add Books
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ------Add Model End---- -->
+
+<!-- Add Author Modal -->
+<div
+  class="modal fade"
+  id="Author"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="id">id</label>
+          <input
+            type="text"
+            class="form-control"
+            name="bookid"
+            [(ngModel)]="authorid"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="name">Author name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="authorname"
+            [(ngModel)]="authorname"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="addauthor()">
+          Add Author
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ------Add Author End---- -->

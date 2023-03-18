@@ -1,0 +1,115 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateAuthor($filter: ModelSubscriptionAuthorFilterInput) {
+  onCreateAuthor(filter: $filter) {
+    id
+    name
+    books {
+      items {
+        id
+        title
+        genre
+        createdAt
+        updatedAt
+        authorBooksId
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateAuthor($filter: ModelSubscriptionAuthorFilterInput) {
+  onUpdateAuthor(filter: $filter) {
+    id
+    name
+    books {
+      items {
+        id
+        title
+        genre
+        createdAt
+        updatedAt
+        authorBooksId
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteAuthor($filter: ModelSubscriptionAuthorFilterInput) {
+  onDeleteAuthor(filter: $filter) {
+    id
+    name
+    books {
+      items {
+        id
+        title
+        genre
+        createdAt
+        updatedAt
+        authorBooksId
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateBook($filter: ModelSubscriptionBookFilterInput) {
+  onCreateBook(filter: $filter) {
+    id
+    title
+    genre
+    author {
+      id
+      name
+      books {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+    authorBooksId
+  }
+}
+subscription OnUpdateBook($filter: ModelSubscriptionBookFilterInput) {
+  onUpdateBook(filter: $filter) {
+    id
+    title
+    genre
+    author {
+      id
+      name
+      books {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+    authorBooksId
+  }
+}
+subscription OnDeleteBook($filter: ModelSubscriptionBookFilterInput) {
+  onDeleteBook(filter: $filter) {
+    id
+    title
+    genre
+    author {
+      id
+      name
+      books {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+    authorBooksId
+  }
+}
